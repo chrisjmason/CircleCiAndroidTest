@@ -9,6 +9,7 @@ checkout:
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
+        QEMU_AUDIO_DRV: none
 
 dependencies:
   pre:
@@ -22,6 +23,12 @@ dependencies:
     - /usr/local/android-sdk-linux/build-tools/26.0.1
     - /usr/local/android-sdk-linux/extras/android/m2repository
 
+
 test:
-    override:
-        - ./gradlew test
+  pre:
+    - emulator -avd circleci-android26 -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+  override:
+    - ./gradlew connectedAndroidTest
