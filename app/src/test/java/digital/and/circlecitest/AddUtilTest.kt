@@ -15,6 +15,6 @@ class AddUtilTest{
     @Test
     fun addsNumbersCorrectly(){
         var addUtil = AddUtil()
-        assertEquals(addUtil.addNumbers(3, 7), 10)
+        assertEquals(addUtil.addNumbers(3, 8), 10)
     }
 }
