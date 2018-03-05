@@ -1,0 +1,31 @@
+version: 2
+
+jobs:
+  build:
+    working-directory: ~/circlecitest
+
+    docker:
+      image: circleci/android:api-26-alpha
+
+    steps:
+      - checkout
+
+      - restore-cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+
+      - save-cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+
+      -run:
+          name: Run Test
+          command: ./gradlew lint test
+      - store_test_results:
+          path: app/build/test-results
+
+
