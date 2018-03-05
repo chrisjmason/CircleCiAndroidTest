@@ -1,4 +1,4 @@
-version: 2
+version: 2.0
 
 jobs:
   build:
@@ -9,19 +9,15 @@ jobs:
 
     steps:
       - checkout
-
       - restore-cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-
       - run:
           name: Download dependencies
           command: ./gradlew androidDependencies
-
       - save-cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-
       -run:
           name: Run Test
           command: ./gradlew lint test
