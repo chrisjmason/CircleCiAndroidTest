@@ -26,6 +26,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.betaDistributionEmails="sclewlow@and.digital, cmason@and.digital"
+            ext.betaDistributionReleaseNotes="Initial release to test ci pipeline"
+        }
     }
 }
 
