@@ -23,7 +23,7 @@ jobs:
           command: ./gradlew lint test
       - run:
           name: Deploy app to Fabric
-          command: ./gradlew crashlyticsUploadDistributionRelease
+          command: ./gradlew assembleRelease crashlyticsUploadDistributionDebug --stacktrace
       - store_test_results:
           path: app/build/test-results
       - store_artifacts:
