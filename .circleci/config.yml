@@ -6,7 +6,7 @@ jobs:
     docker:
      - image: circleci/android:api-26-alpha
     environment:
-      GRADLE_OPTS: -Xmx2048m
+      GRADLE_OPTS: -Xmx4g
     steps:
       - checkout
       - restore_cache:
@@ -22,21 +22,8 @@ jobs:
           name: Run unit tests
           command: ./gradlew lint test
       - run:
-          name: Set up emulator
-          command: sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window
-          Background: true
-      - run:
-          name: Wait for emulator
-          command: |
-            circle-android wait-for-boot
-            sleep 30
-            adb shell input keyevent 82
-      - run:
-          name: Run UI tests
-          command: ./gradlew connectedAndroidTest
+          name: Deploy app to Fabric
+          command: ./gradlew crashlyticsUploadDistributionRelease
       - store_test_results:
           path: app/build/test-results
       - store_artifacts:

@@ -2,7 +2,11 @@ package digital.and.circlecitest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Fabric.with(this, Crashlytics())
         button.setOnClickListener({v -> addNumbers()})
     }
 
